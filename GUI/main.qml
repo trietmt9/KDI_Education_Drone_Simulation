@@ -17,66 +17,9 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 10
 
-            // Left Section: Drone Status (Angles or Altitude)
-            Rectangle {
-                Layout.preferredWidth: parent.width * 0.3
-                Layout.fillHeight: true
-                color: "#424242"
-                radius: 10
-
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 10
-
-                    Text {
-                        id: statusTitle
-                        Layout.alignment: Qt.AlignHCenter
-                        text: "Drone Status"
-                        font.pixelSize: 20
-                        color: "white"
-                    }
-
-                    // Display toggles between angles and altitude
-                    ColumnLayout {
-                        id: statusDisplay
-                        visible: displayMode === "angles"
-                        spacing: 5
-
-                        Text {
-                            Layout.alignment: Qt.AlignHCenter
-                            text: "Roll: " + droneData.roll
-                            font.pixelSize: 18
-                            color: "#00E676"  // Tesla-like green accent
-                        }
-                        Text {
-                            Layout.alignment: Qt.AlignHCenter
-                            text: "Pitch: " + droneData.pitch
-                            font.pixelSize: 18
-                            color: "#00E676"
-                        }
-                        Text {
-                            Layout.alignment: Qt.AlignHCenter
-                            text: "Yaw: " + droneData.yaw
-                            font.pixelSize: 18
-                            color: "#00E676"
-                        }
-                    }
-
-                    Text {
-                        id: altitudeDisplay
-                        visible: displayMode === "altitude"
-                        Layout.alignment: Qt.AlignHCenter
-                        text: "Altitude: " + droneData.altitude
-                        font.pixelSize: 24
-                        color: "#00E676"
-                    }
-                }
-            }
-
             // Center Section: Quadcopter Visualization
             Rectangle {
-                Layout.preferredWidth: parent.width * 0.4
+                Layout.preferredWidth: parent.width * 0.6
                 Layout.fillHeight: true
                 color: "#424242"
                 radius: 10
@@ -167,10 +110,9 @@ ApplicationWindow {
                     }
                 }
             }
-
-            // Right Section: Controls (Toggle between Angles and Altitude)
+            // Left Section: Drone Status (Angles or Altitude)
             Rectangle {
-                Layout.preferredWidth: parent.width * 0.3
+                Layout.preferredWidth: parent.width * 0.5
                 Layout.fillHeight: true
                 color: "#424242"
                 radius: 10
@@ -178,59 +120,68 @@ ApplicationWindow {
                 ColumnLayout {
                     anchors.fill: parent
                     anchors.margins: 10
-                    spacing: 15
+                    spacing: 10
 
                     Text {
+                        id: statusTitle
                         Layout.alignment: Qt.AlignHCenter
-                        text: "Controls"
+                        text: "Drone Status"
                         font.pixelSize: 20
                         color: "white"
                     }
 
-                    // Button to show angles
-                    Button {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 60
-                        text: "Show Angles"
-                        font.pixelSize: 18
-                        background: Rectangle {
-                            color: displayMode === "angles" ? "#00E676" : "#616161"
-                            radius: 5
+                    // Display toggles between angles and altitude
+                    ColumnLayout {
+                        spacing: 25
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Text {
+                            Layout.alignment: Qt.AlignCenter
+                            text: "Roll: " + droneData.roll
+                            font.pixelSize: 24
+                            color: "#00E676"  // Tesla-like green accent
                         }
-                        contentItem: Text {
-                            text: parent.text
-                            font: parent.font
-                            color: displayMode === "angles" ? "black" : "white"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Text {
+                            Layout.alignment: Qt.AlignCenter
+                            text: "Pitch: " + droneData.pitch
+                            font.pixelSize: 24
+                            color: "#00E676"
                         }
-                        onClicked: displayMode = "angles"
-                    }
+                        Text {
+                            Layout.alignment: Qt.AlignCenter
+                            text: "Yaw: " + droneData.yaw
+                            font.pixelSize: 24
+                            color: "#00E676"
+                        }
+                        Text {
+                            Layout.alignment: Qt.AlignCenter
+                            text: "Altitude: " + droneData.altitude
+                            font.pixelSize: 24
+                            color: "#00E676"
+                        }
+                    } 
 
-                    // Button to show altitude
-                    Button {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 60
-                        text: "Show Altitude"
-                        font.pixelSize: 18
-                        background: Rectangle {
-                            color: displayMode === "altitude" ? "#00E676" : "#616161"
-                            radius: 5
-                        }
-                        contentItem: Text {
-                            text: parent.text
-                            font: parent.font
-                            color: displayMode === "altitude" ? "black" : "white"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                        }
-                        onClicked: displayMode = "altitude"
-                    }
                 }
+                Rectangle 
+                {
+                Layout.preferredWidth: parent.width * 0.5
+                Layout.fillHeight: true
+                color: "#424242"
+                radius: 10
+                    ColumnLayout {
+                    spacing: 25
+                    anchors.horizontalCenter: parent.horizontalCenter
+                        Text 
+                        {
+                            Layout.alignment: Qt.AlignCenter
+                            text: "Roll: " + droneData.roll
+                            font.pixelSize: 24
+                        color: "#00E676"  // Tesla-like green accent
+                        }
+                    }
+                }         
             }
         }
     }
-
     // State variable to toggle between angles and altitude display
     property string displayMode: "angles"
 }
