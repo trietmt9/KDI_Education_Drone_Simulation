@@ -1,11 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick3D
 
 ApplicationWindow {
-    visible: true
+    visibility: Window.FullScreen
     width: 800  // Fits a typical 7-inch Raspberry Pi touchscreen
-    height: 480
+    height: 400
     title: "Drone Dashboard"
 
     // Tesla-inspired dark theme
@@ -19,7 +20,7 @@ ApplicationWindow {
 
             // Center Section: Quadcopter Visualization
             Rectangle {
-                Layout.preferredWidth: parent.width * 0.6
+                Layout.preferredWidth: parent.width
                 Layout.fillHeight: true
                 color: "#424242"
                 radius: 10
@@ -34,7 +35,38 @@ ApplicationWindow {
                         font.pixelSize: 20
                         color: "white"
                     }
+                    // Spacer to push info down
+            Item { Layout.preferredHeight: 150 }
 
+            // Info Row
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 40
+
+                Text {
+                    text: "Roll: " + droneData.roll
+                    font.pixelSize: 30
+                    color: "#00E676"
+                }
+                Text {
+                    text: "Pitch: " + droneData.pitch
+                    font.pixelSize: 30
+                    color: "#00E676"
+                }
+                Text {
+                    text: "Altitude: " + droneData.altitude
+                    font.pixelSize: 30
+                    color: "#00E676"
+                }
+            }
+
+
+            // Center Section: 3D Drone Visualization
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    
                     // Quadcopter representation with 4 propellers
                     Item {
                         Layout.fillWidth: true
@@ -106,82 +138,11 @@ ApplicationWindow {
                                     y: quadcopterBody.y + quadcopterBody.height
                                 }
                             }
+                            }
                         }
                     }
                 }
-            }
-            // Left Section: Drone Status (Angles or Altitude)
-            Rectangle {
-                Layout.preferredWidth: parent.width * 0.5
-                Layout.fillHeight: true
-                color: "#424242"
-                radius: 10
-
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    spacing: 10
-
-                    Text {
-                        id: statusTitle
-                        Layout.alignment: Qt.AlignHCenter
-                        text: "Drone Status"
-                        font.pixelSize: 20
-                        color: "white"
-                    }
-
-                    // Display toggles between angles and altitude
-                    ColumnLayout {
-                        spacing: 25
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        Text {
-                            Layout.alignment: Qt.AlignCenter
-                            text: "Roll: " + droneData.roll
-                            font.pixelSize: 24
-                            color: "#00E676"  // Tesla-like green accent
-                        }
-                        Text {
-                            Layout.alignment: Qt.AlignCenter
-                            text: "Pitch: " + droneData.pitch
-                            font.pixelSize: 24
-                            color: "#00E676"
-                        }
-                        Text {
-                            Layout.alignment: Qt.AlignCenter
-                            text: "Yaw: " + droneData.yaw
-                            font.pixelSize: 24
-                            color: "#00E676"
-                        }
-                        Text {
-                            Layout.alignment: Qt.AlignCenter
-                            text: "Altitude: " + droneData.altitude
-                            font.pixelSize: 24
-                            color: "#00E676"
-                        }
-                    } 
-
-                }
-                Rectangle 
-                {
-                Layout.preferredWidth: parent.width * 0.5
-                Layout.fillHeight: true
-                color: "#424242"
-                radius: 10
-                    ColumnLayout {
-                    spacing: 25
-                    anchors.horizontalCenter: parent.horizontalCenter
-                        Text 
-                        {
-                            Layout.alignment: Qt.AlignCenter
-                            text: "Roll: " + droneData.roll
-                            font.pixelSize: 24
-                        color: "#00E676"  // Tesla-like green accent
-                        }
-                    }
-                }         
             }
         }
     }
-    // State variable to toggle between angles and altitude display
-    property string displayMode: "angles"
 }
