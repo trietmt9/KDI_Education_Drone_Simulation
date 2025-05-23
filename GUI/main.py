@@ -1,9 +1,13 @@
+import os
+os.environ["QML_IMPORT_PATH"] = "/home/stephen/Qt/6.6.0/gcc_64/qml"
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtCore import QUrl, QObject, Slot, Property, QTimer
 from PySide6.QtGui import QGuiApplication
 import sys
 import random
 
+import PySide6
+print(PySide6.__version__)
 class DroneDataProvider(QObject):
     def __init__(self):
         super().__init__()
@@ -54,9 +58,10 @@ class DroneDataProvider(QObject):
     altitude = Property(str, get_altitude, notify=altitude_changed)
 
 def main():
+
+
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
-
     # Create drone data provider
     drone_data = DroneDataProvider()
     engine.rootContext().setContextProperty("droneData", drone_data)
