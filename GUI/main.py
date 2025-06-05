@@ -19,7 +19,7 @@ class DroneDataProvider(QObject):
         # Simulate real-time data updates every 500ms
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data)
-        self.timer.start(500)
+        self.timer.start(1000)
 
     # Properties for roll, pitch, yaw, and altitude
     def get_roll(self):
@@ -34,12 +34,27 @@ class DroneDataProvider(QObject):
     def get_altitude(self):
         return f"{self._altitude:.1f} m"
 
+    # Properties for 3D rotation (floats)
+    def get_roll_3d(self):
+        return self._roll
+
+    def get_pitch_3d(self):
+        return self._pitch
+
+    def get_yaw_3d(self):
+        return self._yaw
+
+    def get_altitude_3d(self):
+        return self._altitude
+    
     # Simulate drone data (replace with real sensor data)
     def update_data(self):
         self._roll = random.uniform(-30, 30)  # Mock roll angle
         self._pitch = random.uniform(-30, 30)  # Mock pitch angle
         self._yaw = random.uniform(-180, 180)  # Mock yaw angle
         self._altitude = random.uniform(0, 100)  # Mock altitude
+        
+        # Emit signals to notify QML of changes
         self.roll_changed.emit()
         self.pitch_changed.emit()
         self.yaw_changed.emit()
@@ -53,10 +68,17 @@ class DroneDataProvider(QObject):
     altitude_changed = Signal()
 
     roll = Property(str, get_roll, notify=roll_changed)
-    pitch = Property(str, get_pitch, notify=pitch_changed)
-    yaw = Property(str, get_yaw, notify=yaw_changed)
-    altitude = Property(str, get_altitude, notify=altitude_changed)
+    roll_3d = Property(float, get_roll_3d, notify=roll_changed)
 
+    pitch = Property(str, get_pitch, notify=pitch_changed)
+    pitch_3d = Property(float, get_pitch_3d, notify=pitch_changed)
+
+    yaw = Property(str, get_yaw, notify=yaw_changed)
+    yaw_3d = Property(float, get_yaw_3d, notify=yaw_changed)
+
+    altitude = Property(str, get_altitude, notify=altitude_changed)
+    altitude_3d = Property(float, get_altitude_3d, notify=altitude_changed)
+    
 def main():
 
 
@@ -68,12 +90,10 @@ def main():
 
     # Load QML file
     engine.load(QUrl.fromLocalFile("main.qml"))
-
     if not engine.rootObjects():
         print("Failed to load QML file")
         sys.exit(-1)
 
     sys.exit(app.exec())
-
 if __name__ == "__main__":
     main()
