@@ -19,7 +19,7 @@ class DroneDataProvider(QObject):
         # Simulate real-time data updates every 500ms
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_data)
-        self.timer.start(1000)
+        self.timer.start(1)
 
     # Properties for roll, pitch, yaw, and altitude
     def get_roll(self):
