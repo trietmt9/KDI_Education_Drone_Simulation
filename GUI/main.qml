@@ -141,6 +141,49 @@ ApplicationWindow {
                                 }
                             }
                         }
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 100
+                            color: "#232323"
+                            radius: 8
+                            border.color: "#00B0FF"
+                            border.width: 1
+
+                            Column {
+                                anchors.centerIn: parent
+                                spacing: 5
+
+                                Text {
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    text: "MOTOR PWM"
+                                    font.pixelSize: 14
+                                    color: "#00B0FF"
+                                }
+                                Row {
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    spacing: 12
+                                    Repeater {
+                                        model: droneData.motor_pwm_values.length
+                                        delegate: Column {
+                                            spacing: 2
+                                            Text {
+                                                text: "M" + (index + 1)
+                                                font.pixelSize: 12
+                                                color: "#888888"
+                                                horizontalAlignment: Text.AlignHCenter
+                                            }
+                                            Text {
+                                                text: Math.round(droneData.motor_pwm_values[index]) + " μs"
+                                                font.pixelSize: 18
+                                                font.bold: true
+                                                color: "#00B0FF"
+                                                horizontalAlignment: Text.AlignHCenter
+                                            }
+                                        }
+                                    }
+                                }
+                           }
+                        }
                     }
 
                     Item { Layout.fillHeight: true }
