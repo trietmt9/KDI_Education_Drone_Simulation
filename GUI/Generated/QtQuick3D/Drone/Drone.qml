@@ -1,0 +1,43 @@
+import QtQuick
+import QtQuick3D
+
+Node {
+    id: node
+
+    // Resources
+
+    // Nodes:
+    Node {
+        id: _STL_BINARY_
+        objectName: "<STL_BINARY>"
+        Model {
+            id: model
+            x: 0
+            y: 0
+
+            source: "meshes/node3.mesh"
+            z: 180
+
+            materials: [
+                defaultMaterial_material
+            ]
+        }
+    }
+
+    Node {
+        id: __materialLibrary__
+
+        PrincipledMaterial {
+            id: defaultMaterial_material
+            objectName: "DefaultMaterial"
+        }
+    }
+
+    // Animations:
+}
+
+/*##^##
+Designer {
+    D{i:0;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+}
+##^##*/
